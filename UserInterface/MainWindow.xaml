@@ -1,0 +1,469 @@
+﻿<Window x:Class="UserInterface.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UserInterface"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="500"
+        Width="800">
+    <Window.Resources>
+        <Style TargetType="{x:Type DatePickerTextBox}">
+            <Setter Property="Text"
+                    Value="Vælg dato" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <TabControl>
+            <!--#region Medier -->
+
+            <TabItem Header="Medier">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20.479" />
+                        <ColumnDefinition Width="229.521"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--#region New & Edit -->
+                    <GroupBox Header="Medier: Rediger og opret"
+                  Margin="5,5,5,5"
+                  Grid.Column="0" Grid.ColumnSpan="2">
+                        <!--#region Grid -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="160" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                            </Grid.RowDefinitions>
+                            <!--#endregion-->
+
+                            <!--#region Functional -->
+                            <Button x:Name="Medias_Edit" 
+                                    Content="Rediger"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Margin="32,2,0,0"
+                                    FontSize="14"
+                                    Height="30"
+                                    Width="50"
+                                    Grid.Column="0"
+                                    Grid.Row="5" Click="Medias_Edit_Click"/>
+                            <Button x:Name="Medias_Create" 
+                                    Content="Opret"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Margin="45,2,0,0"
+                                    FontSize="14"
+                                    Height="30"
+                                    Width="50"
+                                    Grid.Column="1"
+                                    Grid.Row="5" Click="Medias_Create_Click"/>
+                            <TextBox x:Name="Medias_Name"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="1"
+                                     Grid.Column="1" />
+                            <TextBox x:Name="Medias_NewName"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="2"
+                                     Grid.Column="1" />
+                            <TextBox x:Name="Medias_Price"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="3"
+                                     Grid.Column="1" />
+                            <ComboBox x:Name="Medias_Type"
+                                      VerticalAlignment="Top"
+                                      HorizontalAlignment="Left"
+                                      Margin="6,12,0,0"
+                                      Text="1"
+                                      IsReadOnly="True"
+                                      Width="130"
+                                      FontSize="15"
+                                      Grid.Row="4"
+                                      Grid.Column="1">
+                                <ComboBoxItem Content="Streaming"/>
+                                <ComboBoxItem Content="Film"/>
+                                <ComboBoxItem Content="Spil"/>
+                            </ComboBox>
+                            <!--#endregion-->
+
+                            <!--#region Labels -->
+                            <Label Content="Navn:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="30,1,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="1"/>
+                            <Label Content="Nyt Navn:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="17,2,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="2"/>
+                            <Label Content="Pris (DKK):"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="12,1,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="3"/>
+                            <Label Content="Type:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="30,2,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="4"/>
+                            <!--#endregion-->
+
+                        </Grid>
+                    </GroupBox>
+                    <!--#endregion-->
+
+                    <!--#region List -->
+                    <GroupBox Header="Medier: Liste"
+                              Margin="5,5,5,5"
+                              Grid.Column="2">
+                        <DataGrid x:Name="MediaList"
+                              Grid.Column="1"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserReorderColumns="False"
+                              AutoGenerateColumns="False" SelectionChanged="MediaList_SelectionChanged" Margin="136,0,136,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Medie nr." Binding="{Binding Path=Id}"/>
+                                <DataGridTextColumn Header="Navn" Binding="{Binding Path=Name}"/>
+                                <DataGridTextColumn Header="Pris (DKK)" Binding="{Binding Path=Price}"/>
+                                <DataGridTextColumn Header="Type" Binding="{Binding Path=Type}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                    <!--#endregion-->
+
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Anmeldere -->
+            <TabItem Header="Anmeldere">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20.479" />
+                        <ColumnDefinition Width="229.521"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--#region New & Edit -->
+                    <GroupBox Header="Anmeldere: Rediger og opret"
+                  Margin="5,5,5,5"
+                  Grid.Column="0" Grid.ColumnSpan="2">
+                        <!--#region Grid -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="160" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                                <RowDefinition Height="55" />
+                            </Grid.RowDefinitions>
+                            <!--#endregion-->
+
+                            <!--#region Functional -->
+                            <Button x:Name="Reviewer_Edit" 
+                                    Content="Rediger"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Margin="32,2,0,0"
+                                    FontSize="14"
+                                    Height="30"
+                                    Width="50"
+                                    Grid.Column="0"
+                                    Grid.Row="5" Click="Reviewer_Edit_Click"/>
+                            <Button x:Name="Reviewer_Create" 
+                                    Content="Opret"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Margin="45,2,0,0"
+                                    FontSize="14"
+                                    Height="30"
+                                    Width="50"
+                                    Grid.Column="1"
+                                    Grid.Row="5" Click="Reviewer_Create_Click"/>
+                            <TextBox x:Name="Reviewer_Name"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="1"
+                                     Grid.Column="1" />
+                            <TextBox x:Name="Reviewer_NewName"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="2"
+                                     Grid.Column="1" />
+                            <TextBox x:Name="Reviewer_Mail"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="3"
+                                     Grid.Column="1" />
+                            <!--#endregion-->
+
+                            <!--#region Labels -->
+                            <Label Content="Navn:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="30,1,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="1"/>
+                            <Label Content="Nyt Navn:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="17,2,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="2"/>
+                            <Label Content="Mail:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="30,2,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="3"/>
+                            <!--#endregion-->
+
+                        </Grid>
+                    </GroupBox>
+                    <!--#endregion-->
+
+                    <!--#region List -->
+                    <GroupBox Header="Anmeldere: Liste"
+                              Margin="5,5,5,5"
+                              Grid.Column="2">
+                        <DataGrid x:Name="ReviewerList"
+                              Grid.Column="1"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserReorderColumns="False"
+                              AutoGenerateColumns="False" Margin="48,0,48,0" SelectionChanged="ReviewerList_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Anmelder nr." Binding="{Binding Path=Id}"/>
+                                <DataGridTextColumn Header="Navn" Binding="{Binding Path=Name}"/>
+                                <DataGridTextColumn Header="Mail" Binding="{Binding Path=Mail}"/>
+                                <DataGridTextColumn Header="Anmeldelser" Binding="{Binding Path=Reviews.Count}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                    <!--#endregion-->
+
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Anmeldelser -->
+            <TabItem Header="Anmeldelser">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20.479" />
+                        <ColumnDefinition Width="229.521"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--#region New & Edit -->
+                    <GroupBox Header="Anmeldelser: Rediger og opret"
+                  Margin="5,5,5,5"
+                  Grid.Column="0" Grid.ColumnSpan="2">
+                        <!--#region Grid -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="160" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="170" />
+                                <RowDefinition Height="50" />
+                            </Grid.RowDefinitions>
+                            <!--#endregion-->
+
+                            <!--#region Functional -->
+                            <Button x:Name="Review_Edit" 
+                                    Content="Rediger"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Left"
+                                    Margin="32,0,0,18"
+                                    FontSize="14"
+                                    Height="30"
+                                    Width="50"
+                                    Grid.Column="0"
+                                    Grid.Row="5" Click="Review_Edit_Click"/>
+                            <Button x:Name="Review_Create" 
+                                    Content="Opret"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Margin="45,2,0,0"
+                                    FontSize="14"
+                                    Height="30"
+                                    Width="50"
+                                    Grid.Column="1"
+                                    Grid.Row="6" Click="Review_Create_Click"/>
+                            <TextBox x:Name="Review_Reviewer"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="0"
+                                     Grid.Column="1" />
+                            <TextBox x:Name="Review_DigitalMediaProduct"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="1"
+                                     Grid.Column="1" />
+                            <TextBox x:Name="Review_Rate"
+                                     Height="20"
+                                     Width="130"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,6,0,0"
+                                     FontSize="15"
+                                     Grid.Row="2"
+                                     Grid.Column="1" />
+                            <DatePicker x:Name="Review_Date"
+                                        Height="30"
+                                        Width="130"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        Margin="6"
+                                        FontSize="15"
+                                        Grid.Row="3"
+                                        Grid.Column="1" />
+                            <TextBox x:Name="Review_Text"
+                                     Height="156"
+                                     Width="130"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,0,0,0"
+                                     FontSize="15"
+                                     Grid.Row="4"
+                                     Grid.Column="1" />
+                            <!--#endregion-->
+
+                            <!--#region Labels -->
+                            <Label Content="Anmelder nr:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,1,0,0"
+                                   FontSize="14"
+                                   Grid.Row="0" Width="89"/>
+                            <Label Content="Medie nr:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,2,0,0"
+                                   FontSize="14"
+                                   Grid.Row="1" Width="82"/>
+                            <Label Content="Rate [1:5]:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="10,2,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="2" Width="80"/>
+                            <Label Content="Dato:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="10,2,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="3" Width="80"/>
+                            <Label Content="Uddybelse:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="10,2,0,0"
+                                   FontSize="14"
+                                   Grid.Column="0"
+                                   Grid.Row="4" Width="80"/>
+                            <!--#endregion-->
+
+                        </Grid>
+                    </GroupBox>
+                    <!--#endregion-->
+
+                    <!--#region List -->
+                    <GroupBox Header="Anmeldelser: Liste"
+                              Margin="5,5,5,5"
+                              Grid.Column="2">
+                        <DataGrid x:Name="ReviewList"
+                              Grid.Column="1"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserReorderColumns="False"
+                              AutoGenerateColumns="False" Margin="-1,0,0,0" SelectionChanged="ReviewList_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Anmeldelses nr." Binding="{Binding Path=Id}"/>
+                                <DataGridTextColumn Header="Anmelder" Binding="{Binding Path=Reviewer.Name}"/>
+                                <DataGridTextColumn Header="Medie" Binding="{Binding Path=DigitalMediaProduct.Name}"/>
+                                <DataGridTextColumn Header="Rate" Binding="{Binding Path=Rating}"/>
+                                <DataGridTextColumn Header="Dato" Binding="{Binding Path=Date}"/>
+                                <DataGridTextColumn Header="Uddybbelse" Binding="{Binding Path=Text}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                    <!--#endregion-->
+
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
+        </TabControl>
+    </Grid>
+</Window>
